@@ -1,9 +1,5 @@
 package linalg
 
-import (
-	"math/rand"
-)
-
 // Dense: structure representing a dense matrix
 type Dense struct {
 	nrows int
@@ -40,10 +36,7 @@ func (m *Dense) Shape() Shape {
 	return Shape{m.nrows, m.ncols}
 }
 
-func randValue(min, max float64) float64 {
-	return min + rand.Float64()*(max-min)
-}
-
+// NewRandDense: returns a dense matrix with random values
 func NewRandDense(r, c int, min, max float64) *Dense {
 	if r <= 0 || c <= 0 {
 		if r == 0 || c == 0 {
@@ -56,13 +49,33 @@ func NewRandDense(r, c int, min, max float64) *Dense {
 	data := make([]float64, r*c)
 	for i := 0; i < r; i++ {
 		for j := 0; j < c; j++ {
-			data[i*r+j] = randValue(min, max)
+			data[i*r+j] = RandValue(min, max)
 		}
 	}
 
 	return &Dense{
 		nrows: r,
 		ncols: c,
+		data:  data,
+	}
+}
+
+func NewEye(r int) *Dense {
+	if r <= 0 {
+		if r == 0 {
+			panic(ErrZeroLengthDimensions)
+		}
+		panic(ErrNegativeDimensions)
+	}
+
+	data := make([]float64, r*r)
+	for i := 0; i < r; i++ {
+		data[i*r+i] = 1.0
+	}
+
+	return &Dense{
+		nrows: r,
+		ncols: r,
 		data:  data,
 	}
 }
