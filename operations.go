@@ -104,14 +104,17 @@ func MulElem(a, b *Dense) (*Dense, error) {
 }
 
 // Apply
-func (m *Dense) Apply(fn func(v float64) float64) {
+func Apply(m *Dense, fn func(v float64) float64) *Dense {
 	// get matrix shape
 	mShape := m.Shape()
 
 	// apply function to each element of the matrix
+	res := make([]float64, mShape[0]*mShape[1])
 	for i := 0; i < mShape[0]; i++ {
 		for j := 0; j < mShape[1]; j++ {
-			m.Data[i*mShape[1]+j] = fn(m.Data[i*mShape[1]+j])
+			res[i*mShape[1]+j] = fn(m.Data[i*mShape[1]+j])
 		}
 	}
+
+	return NewDense(mShape[0], mShape[1], res)
 }
