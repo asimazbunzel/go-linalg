@@ -8,7 +8,8 @@ func (err Error) Error() string { return err.string }
 
 // Different types of errors
 var (
-	ErrNegativeDimensions   = Error{"negative dimensions provided"}
-	ErrZeroLengthDimensions = Error{"zero length array"}
-	ErrMismatchDimensions   = Error{"mismatch dimensions"}
+	ErrNegativeDimensions    = Error{"negative dimensions provided"}
+	ErrZeroLengthDimensions  = Error{"zero length array"}
+	ErrMismatchDimensions    = Error{"mismatch dimensions"}
+	ErrMulMismatchDimensions = Error{"AxB error: number of cols in A != rows in B"}
 )
