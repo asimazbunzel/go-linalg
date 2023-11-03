@@ -7,9 +7,6 @@ type Dense struct {
 	data  []float64
 }
 
-// Shape: struct containing dimensional information of matrix
-type Shape []int
-
 // NewDense: returns a pointer to a dense matrix
 func NewDense(r, c int, data []float64) *Dense {
 	if r <= 0 || c <= 0 {
@@ -31,11 +28,6 @@ func NewDense(r, c int, data []float64) *Dense {
 	}
 }
 
-// Shape: returns number of rows and columns as an array of integers in the dense matrix
-func (m *Dense) Shape() Shape {
-	return Shape{m.nrows, m.ncols}
-}
-
 // NewRandDense: returns a dense matrix with random values
 func NewRandDense(r, c int, min, max float64) *Dense {
 	if r <= 0 || c <= 0 {
@@ -49,7 +41,7 @@ func NewRandDense(r, c int, min, max float64) *Dense {
 	data := make([]float64, r*c)
 	for i := 0; i < r; i++ {
 		for j := 0; j < c; j++ {
-			data[i*r+j] = RandValue(min, max)
+			data[i*c+j] = RandValue(min, max)
 		}
 	}
 
@@ -60,6 +52,31 @@ func NewRandDense(r, c int, min, max float64) *Dense {
 	}
 }
 
+// NewZeroDense: returns a dense matrix with zero values
+func NewZeroDense(r, c int) *Dense {
+	if r <= 0 || c <= 0 {
+		if r == 0 || c == 0 {
+			panic(ErrZeroLengthDimensions)
+		}
+		panic(ErrNegativeDimensions)
+	}
+
+	// alloc array of proper dimension & fill it with zeroes
+	data := make([]float64, r*c)
+	for i := 0; i < r; i++ {
+		for j := 0; j < c; j++ {
+			data[i*c+j] = 0.0
+		}
+	}
+
+	return &Dense{
+		nrows: r,
+		ncols: c,
+		data:  data,
+	}
+}
+
+// NewEye: returns an identity dense matrix
 func NewEye(r int) *Dense {
 	if r <= 0 {
 		if r == 0 {
