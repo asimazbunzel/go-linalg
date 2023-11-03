@@ -2,9 +2,9 @@ package linalg
 
 // Dense: structure representing a dense matrix
 type Dense struct {
-	nrows int
-	ncols int
-	data  []float64
+	Nrows int
+	Ncols int
+	Data  []float64
 }
 
 // NewDense: returns a pointer to a dense matrix
@@ -22,9 +22,9 @@ func NewDense(r, c int, data []float64) *Dense {
 		data = make([]float64, r*c)
 	}
 	return &Dense{
-		nrows: r,
-		ncols: c,
-		data:  data,
+		Nrows: r,
+		Ncols: c,
+		Data:  data,
 	}
 }
 
@@ -46,9 +46,9 @@ func NewRandDense(r, c int, min, max float64) *Dense {
 	}
 
 	return &Dense{
-		nrows: r,
-		ncols: c,
-		data:  data,
+		Nrows: r,
+		Ncols: c,
+		Data:  data,
 	}
 }
 
@@ -70,9 +70,9 @@ func NewZeroDense(r, c int) *Dense {
 	}
 
 	return &Dense{
-		nrows: r,
-		ncols: c,
-		data:  data,
+		Nrows: r,
+		Ncols: c,
+		Data:  data,
 	}
 }
 
@@ -91,8 +91,8 @@ func NewEye(r int) *Dense {
 	}
 
 	return &Dense{
-		nrows: r,
-		ncols: r,
-		data:  data,
+		Nrows: r,
+		Ncols: r,
+		Data:  data,
 	}
 }

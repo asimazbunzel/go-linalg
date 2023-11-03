@@ -10,7 +10,7 @@ type Shape []int
 
 // Shape: returns number of rows and columns as an array of integers in the dense matrix
 func (m *Dense) Shape() Shape {
-	return Shape{m.nrows, m.ncols}
+	return Shape{m.Nrows, m.Ncols}
 }
 
 // RandValue: returns a random float between [min, max]
@@ -23,12 +23,12 @@ func (m *Dense) Print() {
 	topLeft, topRight := "⎡", "⎤\n"
 	botLeft, botRight := "⎣", "⎦\n"
 
-	for i := 0; i < m.nrows; i++ {
+	for i := 0; i < m.Nrows; i++ {
 		var leftMsg, rightMsg string
 		if i == 0 {
 			leftMsg = topLeft
 			rightMsg = topRight
-		} else if i == m.nrows-1 {
+		} else if i == m.Nrows-1 {
 			leftMsg = botLeft
 			rightMsg = botRight
 		} else {
@@ -36,14 +36,14 @@ func (m *Dense) Print() {
 			rightMsg = "⎢\n"
 		}
 
-		for j := 0; j < m.ncols; j++ {
-			idx := i*m.ncols + j
-			if j == m.ncols-1 {
-				fmt.Printf("%.4f %s", m.data[idx], rightMsg)
+		for j := 0; j < m.Ncols; j++ {
+			idx := i*m.Ncols + j
+			if j == m.Ncols-1 {
+				fmt.Printf("%.4f %s", m.Data[idx], rightMsg)
 			} else if j == 0 {
-				fmt.Printf("%s %.4f ", leftMsg, m.data[idx])
+				fmt.Printf("%s %.4f ", leftMsg, m.Data[idx])
 			} else {
-				fmt.Printf("%.4f ", m.data[idx])
+				fmt.Printf("%.4f ", m.Data[idx])
 			}
 		}
 	}
