@@ -14,7 +14,7 @@ func Sum(a, b *Dense) (*Dense, error) {
 	res := make([]float64, aShape[0]*bShape[1])
 	for i := 0; i < aShape[0]; i++ {
 		for j := 0; j < aShape[1]; j++ {
-			res[i*aShape[1]+j] = a.data[i*aShape[1]+j] + b.data[i*aShape[1]+j]
+			res[i*aShape[1]+j] = a.Data[i*aShape[1]+j] + b.Data[i*aShape[1]+j]
 		}
 	}
 
@@ -35,7 +35,7 @@ func Sub(a, b *Dense) (*Dense, error) {
 	res := make([]float64, aShape[0]*bShape[1])
 	for i := 0; i < aShape[0]; i++ {
 		for j := 0; j < aShape[1]; j++ {
-			res[i*aShape[1]+j] = a.data[i*aShape[1]+j] - b.data[i*aShape[1]+j]
+			res[i*aShape[1]+j] = a.Data[i*aShape[1]+j] - b.Data[i*aShape[1]+j]
 		}
 	}
 
@@ -50,7 +50,7 @@ func Scale(f float64, a *Dense) (*Dense, error) {
 	res := make([]float64, aShape[0]*aShape[1])
 	for i := 0; i < aShape[0]; i++ {
 		for j := 0; j < aShape[1]; j++ {
-			res[i*aShape[1]+j] += f * a.data[i*aShape[1]+j]
+			res[i*aShape[1]+j] += f * a.Data[i*aShape[1]+j]
 		}
 	}
 
@@ -74,7 +74,7 @@ func Mul(a, b *Dense) (*Dense, error) {
 	for i := 0; i < aShape[0]; i++ {
 		for j := 0; j < bShape[1]; j++ {
 			for k := 0; k < aShape[1]; k++ {
-				res[i*bShape[1]+j] += a.data[i*aShape[1]+k] * b.data[k*bShape[1]+j]
+				res[i*bShape[1]+j] += a.Data[i*aShape[1]+k] * b.Data[k*bShape[1]+j]
 			}
 		}
 	}
@@ -96,9 +96,22 @@ func MulElem(a, b *Dense) (*Dense, error) {
 	res := make([]float64, aShape[0]*aShape[1])
 	for i := 0; i < aShape[0]; i++ {
 		for j := 0; j < aShape[1]; j++ {
-			res[i*aShape[1]+j] = a.data[i*aShape[1]+j] * b.data[i*bShape[1]+j]
+			res[i*aShape[1]+j] = a.Data[i*aShape[1]+j] * b.Data[i*bShape[1]+j]
 		}
 	}
 
 	return NewDense(aShape[0], aShape[1], res), nil
+}
+
+// Apply
+func (m *Dense) Apply(fn func(v float64) float64) {
+	// get matrix shape
+	mShape := m.Shape()
+
+	// apply function to each element of the matrix
+	for i := 0; i < mShape[0]; i++ {
+		for j := 0; j < mShape[1]; j++ {
+			m.Data[i*mShape[1]+j] = fn(m.Data[i*mShape[1]+j])
+		}
+	}
 }
