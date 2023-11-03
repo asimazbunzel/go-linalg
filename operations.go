@@ -42,6 +42,21 @@ func Sub(a, b *Dense) (*Dense, error) {
 	return NewDense(aShape[0], aShape[1], res), nil
 }
 
+// Scale: multiply a dense matrix with a scalar
+func Scale(f float64, a *Dense) (*Dense, error) {
+	// get matrix shapes (m,n) -- rows,cols
+	aShape := a.Shape()
+
+	res := make([]float64, aShape[0]*aShape[1])
+	for i := 0; i < aShape[0]; i++ {
+		for j := 0; j < aShape[1]; j++ {
+			res[i*aShape[1]+j] += f * a.data[i*aShape[1]+j]
+		}
+	}
+
+	return NewDense(aShape[0], aShape[1], res), nil
+}
+
 // MatMul: returns the result of multiplying AxB
 func Mul(a, b *Dense) (*Dense, error) {
 	// get matrix shapes (m,n) -- rows,cols
