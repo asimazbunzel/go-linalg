@@ -66,3 +66,24 @@ func Mul(a, b *Dense) (*Dense, error) {
 
 	return NewDense(aShape[0], bShape[1], res), nil
 }
+
+// MulElem
+func MulElem(a, b *Dense) (*Dense, error) {
+	// get matrix shapes (m,n) -- rows,cols
+	aShape := a.Shape()
+	bShape := b.Shape()
+
+	// check that cols & rows in A == cols & rows in B
+	if aShape[0] != bShape[0] || aShape[1] != bShape[1] {
+		return nil, ErrMulMismatchDimensions
+	}
+
+	res := make([]float64, aShape[0]*aShape[1])
+	for i := 0; i < aShape[0]; i++ {
+		for j := 0; j < aShape[1]; j++ {
+			res[i*aShape[1]+j] = a.data[i*aShape[1]+j] * b.data[i*bShape[1]+j]
+		}
+	}
+
+	return NewDense(aShape[0], aShape[1], res), nil
+}
