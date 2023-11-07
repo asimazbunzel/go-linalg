@@ -1,5 +1,23 @@
 package linalg
 
+// GetRow: returns a row from a dense matrix
+func (m *Dense) GetRow(row int) (*Dense, error) {
+	// get matrix shapes (m,n) -- rows,cols
+	mShape := m.Shape()
+
+	// check that row to retrieve is within rows of dense matrix
+	if row >= mShape[0] {
+		return nil, ErrMismatchDimensions
+	}
+
+	res := make([]float64, 1*mShape[1])
+	for j := 0; j < mShape[1]; j++ {
+		res[j] = m.Data[row*mShape[1]+j]
+	}
+
+	return NewDense(1, mShape[1], res), nil
+}
+
 // Sum: returns the result of substracting two dense matrices
 func Sum(a, b *Dense) (*Dense, error) {
 	// get matrix shapes (m,n) -- rows,cols
