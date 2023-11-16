@@ -12,4 +12,5 @@ var (
 	ErrZeroLengthDimensions  = Error{"zero length array"}
 	ErrMismatchDimensions    = Error{"mismatch dimensions"}
 	ErrMulMismatchDimensions = Error{"AxB error: number of cols in A != rows in B"}
+	ErrBoundaryDimensions    = Error{"out of boundary limit reached"}
 )

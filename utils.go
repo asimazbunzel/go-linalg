@@ -44,11 +44,11 @@ func (m *Dense) Print() {
 		for j := 0; j < m.Ncols; j++ {
 			idx := i*m.Ncols + j
 			if j == m.Ncols-1 {
-				fmt.Printf("%.4f %s", m.Data[idx], rightMsg)
+				fmt.Printf("%.4e %s", m.Data[idx], rightMsg)
 			} else if j == 0 {
-				fmt.Printf("%s %.4f ", leftMsg, m.Data[idx])
+				fmt.Printf("%s %.4e ", leftMsg, m.Data[idx])
 			} else {
-				fmt.Printf("%.4f ", m.Data[idx])
+				fmt.Printf("%.4e ", m.Data[idx])
 			}
 		}
 	}

@@ -18,6 +18,31 @@ func (m *Dense) GetRow(row int) (*Dense, error) {
 	return NewDense(1, mShape[1], res), nil
 }
 
+// Slice: returns a slice of a dense matrix
+func (m *Dense) Slice(rows, cols []int) (*Dense, error) {
+	// dimensions of root dense matrix
+	mShape := m.Shape()
+
+	// check dimensions
+	if rows[0] < 0 || rows[1] < 0 || cols[0] < 0 || cols[1] < 0 {
+		return nil, ErrNegativeDimensions
+	}
+	if rows[1] > mShape[0] || cols[1] > mShape[1] {
+		return nil, ErrBoundaryDimensions
+	}
+
+	nrows := rows[1] - rows[0]
+	ncols := cols[1] - cols[0]
+	res := []float64{}
+	for i := rows[0]; i < rows[1]; i++ {
+		for j := cols[0]; j < cols[1]; j++ {
+			res = append(res, m.Data[i*mShape[1]+j])
+		}
+	}
+
+	return NewDense(nrows, ncols, res), nil
+}
+
 // Sum: returns the result of substracting two dense matrices
 func Sum(a, b *Dense) (*Dense, error) {
 	// get matrix shapes (m,n) -- rows,cols
